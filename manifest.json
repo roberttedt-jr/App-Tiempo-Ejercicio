@@ -2,7 +2,7 @@
   "name": "ATMOS. - Pronóstico Pro",
   "short_name": "ATMOS.",
   "description": "Tu pronóstico meteorológico instantáneo en tiempo real.",
-  "start_url": "./index.html",
+  "start_url": "./app.html",
   "display": "standalone",
   "background_color": "#0b1021",
   "theme_color": "#4facfe",
@@ -18,4 +18,5 @@
       "type": "image/png"
     }
   ]
+
 }
