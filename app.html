@@ -100,12 +100,10 @@
         @keyframes pulseSun { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         .logo-dot { animation: pulse 2s infinite; }
 
-        /* Modales */
+        /* Modales y Skeleton */
         .modal { transition: opacity 0.3s ease, transform 0.3s ease; }
         .modal-open { opacity: 1; pointer-events: auto; transform: scale(1); }
         .modal-closed { opacity: 0; pointer-events: none; transform: scale(0.95); }
-
-        /* Skeleton */
         .skeleton {
             background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
             background-size: 200% 100%;
@@ -115,47 +113,31 @@
         }
         .skeleton * { opacity: 0; }
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        /* Fade Masks */
         .fade-mask-top {
             mask-image: linear-gradient(to bottom, transparent 0px, transparent 120px, black 160px, black calc(100% - 40px), transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, transparent 0px, transparent 120px, black 160px, black calc(100% - 40px), transparent 100%);
         }
 
-        /* Avatar Selection */
+        /* Avatar Selection y Dropdown */
         .avatar-option:hover { transform: scale(1.1); border-color: #FDE047; }
         .avatar-selected { border-color: #FDE047 !important; background-color: rgba(255,255,255,0.2); transform: scale(1.1); }
-        
-        /* Dropdown custom transition */
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, opacity 0.3s ease;
-            opacity: 0;
-        }
-        .collapsible-content.open {
-            max-height: 1000px; /* Suficientemente grande para el contenido */
-            opacity: 1;
-            transition: max-height 0.7s ease-in, opacity 0.5s ease;
-        }
+        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, opacity 0.3s ease; opacity: 0; }
+        .collapsible-content.open { max-height: 1000px; opacity: 1; transition: max-height 0.7s ease-in, opacity 0.5s ease; }
 
-        /* --- BUSCADOR FLUIDO FIX --- */
-        #searchBar {
-            /* Estado inicial: fuera de vista y transparente */
-            transform: translateY(-120%);
-            opacity: 0;
-            pointer-events: none;
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-        }
-        #searchBar.search-bar-open { 
-            /* Estado abierto: visible */
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
+        /* BUSCADOR FLUIDO */
+        #searchBar { transform: translateY(-120%); opacity: 0; pointer-events: none; transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; }
+        #searchBar.search-bar-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        
+        /* --- REGLAS DE INTEGRACIÓN iOS (CORREGIDAS) --- */
         .safe-area-header { 
-    padding-top: calc(3rem + env(safe-area-inset-top)); 
-}
+            /* Mueve el Header fijo (logo y botones) hacia abajo */
+            padding-top: calc(3rem + env(safe-area-inset-top)); 
+        }
+        .scroll-compensation {
+            /* Mueve el contenido desplazable (scroll) para que empiece donde termina el Header */
+            padding-top: calc(5.5rem + env(safe-area-inset-top)); 
+        }
+        /* --- FIN REGLAS CORREGIDAS --- */
     </style>
 </head>
 <body class="bg-sunny relative">
@@ -165,7 +147,7 @@
     <!-- CONTENEDOR PRINCIPAL -->
     <div class="w-full h-full md:h-[90vh] md:max-h-[850px] md:w-[400px] bg-glass backdrop-blur-2xl md:rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col border border-white/20 z-10 text-center mx-auto flex-none ring-1 ring-white/10">
         
-        <!-- HEADER FLOTANTE -->
+        <!-- HEADER FLOTANTE (CLASE CORREGIDA) -->
         <div class="absolute top-0 left-0 w-full z-30 pb-4 px-6 flex justify-between items-center pointer-events-none safe-area-header">
             <button onclick="toggleSidePanel()" class="text-white/90 hover:text-white transition p-2 bg-white/10 rounded-full backdrop-blur-md shadow-sm pointer-events-auto relative">
                 <i class="fas fa-bars text-sm"></i>
@@ -230,7 +212,6 @@
                 <div>
                     <h3 class="text-xs font-bold uppercase opacity-50 tracking-widest mb-3">Mapas Pro</h3>
                     <div class="grid grid-cols-1 gap-2">
-                        <!-- Icono de lluvia actualizado aquí -->
                         <button onclick="openMap('rain')" class="bg-white/5 hover:bg-blue-500/20 border border-white/10 p-3 rounded-xl flex items-center gap-3 transition group">
                             <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition text-blue-300"><i class="fas fa-cloud-showers-heavy"></i></div>
                             <span class="font-bold text-sm">Radar de Lluvia</span>
@@ -258,11 +239,10 @@
             </div>
         </div>
 
-        <!-- CONTENIDO SCROLLABLE -->
-        <div class="h-full w-full overflow-y-auto hide-scroll pt-36 pb-28 px-0 fade-mask-top">
+        <!-- CONTENIDO SCROLLABLE (CLASE CORREGIDA) -->
+        <div class="h-full w-full overflow-y-auto hide-scroll scroll-compensation pb-28 px-0 fade-mask-top">
             
             <!-- 1. TIEMPO PRINCIPAL -->
-            <!-- Importante: onclick para abrir el buscador -->
             <div class="flex flex-col items-center justify-center mb-8 text-center px-4 w-full">
                 <div class="flex items-center gap-2 text-white/90 mb-4 bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/5 shadow-sm cursor-pointer hover:bg-white/20 transition" onclick="toggleSearch()">
                     <i class="fas fa-location-arrow text-xs opacity-70"></i>
@@ -677,7 +657,7 @@
                     });
                     list.classList.remove('hidden');
                 } else { list.classList.add('hidden'); }
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error("Error API", e); }
         }
 
         function selectSuggestion(city) {
@@ -1064,7 +1044,7 @@
                 cloud.innerHTML = '<i class="fas fa-cloud text-white text-9xl filter blur-xl"></i>';
                 cloud.style.top = '10%';
                 cloud.style.animationDuration = '20s';
-                container.appendChild(cloud);
+                    container.appendChild(cloud);
             }
         }
 
@@ -1141,6 +1121,3 @@
 </body>
 
 </html>
-
-
-
