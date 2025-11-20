@@ -56,7 +56,6 @@
             outline: none;
         }
 
-        /* CORRECCIÓN VISUAL DE SWIPE (v4.2): Evita selección de texto al deslizar */
         .noselect {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -96,7 +95,7 @@
         .bg-sunset { background: linear-gradient(-45deg, #654ea3, #eaafc8, #2C3E50); }
         .bg-day { background: linear-gradient(-45deg, #4A90E2, #50C9C3, #96deda); }
 
-        /* Contraste */
+        /* Contraste Global (Modo Día) */
         body.high-contrast-mode {
             color: #1e293b !important;
             text-shadow: none !important;
@@ -115,6 +114,23 @@
         body.high-contrast-mode .skeleton {
             background: linear-gradient(90deg, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.05) 75%) !important;
         }
+
+        /* --- FIX v4.3: FORZAR TEXTO BLANCO EN PANEL LATERAL --- */
+        /* Esto sobreescribe el modo día para que el panel oscuro siempre tenga texto claro */
+        #sidePanel, #sidePanel * {
+            color: white !important;
+        }
+        /* Excepción para inputs dentro del panel para mantener placeholder visible */
+        #sidePanel input::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+        #sidePanel i {
+            color: white !important;
+        }
+        #sidePanel .text-white\/50 {
+            color: rgba(255,255,255,0.5) !important;
+        }
+        /* Fin del Fix */
 
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
@@ -210,7 +226,7 @@
             height: 90px !important; 
         }
 
-        /* PAGINATION DOTS (RESTAURADO v4.2: Fondo oscuro tipo pastilla) */
+        /* PAGINATION DOTS */
         .dot {
             width: 6px;
             height: 6px;
@@ -227,7 +243,7 @@
         }
     </style>
 </head>
-<body class="bg-night relative noselect"> <!-- v4.2: noselect añadido al body -->
+<body class="bg-night relative noselect">
 
     <!-- Toast -->
     <div id="customToast" class="toast-notification">
@@ -311,9 +327,9 @@
 
             <h3 class="font-bold opacity-90 tracking-widest text-[10px] uppercase mb-4 px-6 text-left text-shadow">Detalles Actuales</h3>
             
-            <!-- v4.2: GRIT DE DETALLES REESTRUCTURADO (3 visibles + 6 ocultos) -->
+            <!-- GRIT DE DETALLES -->
             <div class="grid grid-cols-3 gap-3 px-6 mb-4 w-full">
-                <!-- LOS 3 PRINCIPALES (Siempre visibles) -->
+                <!-- LOS 3 PRINCIPALES -->
                 <div class="bg-glassDark rounded-2xl p-3 flex flex-col items-center justify-center border border-white/10 backdrop-blur-md shadow-lg">
                     <i class="fas fa-wind mb-2 opacity-80 text-lg" id="windDirArrow"></i>
                     <p id="windSpeed" class="font-bold text-base leading-none skeleton-target">--</p>
@@ -330,7 +346,7 @@
                     <p class="text-[9px] uppercase opacity-60 font-bold tracking-widest mt-1">Prob.</p>
                 </div>
 
-                <!-- LOS 6 SECUNDARIOS (Ocultos por defecto, clase extra-detail) -->
+                <!-- LOS 6 SECUNDARIOS (Ocultos) -->
                 <div class="extra-detail hidden bg-glassDark rounded-2xl p-3 flex flex-col items-center justify-center border border-white/10 backdrop-blur-md shadow-lg">
                     <i class="fas fa-sun mb-2 opacity-80 text-lg"></i>
                     <p id="uvDisplay" class="font-bold text-base skeleton-target">--</p>
@@ -423,7 +439,7 @@
                 <i class="fas fa-map text-lg drop-shadow-md"></i>
             </button>
             
-            <!-- PAGINATION DOTS (RESTAURADO FONDO v4.2) -->
+            <!-- PAGINATION DOTS -->
             <div class="h-8 px-4 bg-white/10 border border-white/20 rounded-full flex items-center gap-2 backdrop-blur-xl shadow-2xl">
                 <div id="paginationDots" class="flex gap-2 items-center justify-center px-1">
                     <div class="dot active"></div>
@@ -435,7 +451,7 @@
             </button>
         </div>
 
-        <!-- MODALES Y RESTO DEL CÓDIGO IGUAL (Detail, Profile, Map) -->
+        <!-- MODALES Y RESTO DEL CÓDIGO -->
         <div id="detailModal" class="absolute inset-0 z-[60] flex items-center justify-center p-6 modal modal-closed bg-black/60 backdrop-blur-xl">
             <div class="bg-gray-900/80 border border-white/10 text-white w-full max-w-sm rounded-3xl p-8 shadow-2xl relative flex flex-col items-center text-center backdrop-blur-2xl">
                 <button onclick="triggerHaptic(); closeModal('detailModal')" class="absolute top-5 right-5 w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition"><i class="fas fa-times text-sm"></i></button>
@@ -525,7 +541,7 @@
         let currentViewIndex = 0; 
         let homeLocation = { lat: 40.4165, lon: -3.7026, name: "Madrid" }; 
 
-        // Arrays e iconos igual que antes
+        // Arrays e iconos
         const avatars = [
             { icon: 'fa-user-astronaut', color: 'bg-purple-500' }, { icon: 'fa-sun', color: 'bg-yellow-500' }, { icon: 'fa-bolt', color: 'bg-blue-500' },
             { icon: 'fa-snowflake', color: 'bg-cyan-400' }, { icon: 'fa-cloud-moon', color: 'bg-indigo-500' }, { icon: 'fa-poo-storm', color: 'bg-amber-700' },
@@ -542,7 +558,7 @@
         function toggleSkeleton(show) { document.querySelectorAll('.skeleton-target').forEach(el => el.classList.toggle('skeleton', show)); }
         function triggerHaptic() { if(navigator.vibrate) navigator.vibrate(15); }
         
-        // NUEVA LOGICA v4.2: Toggle Detalles
+        // Toggle Detalles
         function toggleDetails() {
             const hiddenItems = document.querySelectorAll('.extra-detail');
             const btnText = document.getElementById('detailsBtnText');
@@ -550,22 +566,12 @@
             let isExpanding = false;
 
             hiddenItems.forEach(item => {
-                if(item.classList.contains('hidden')) {
-                    item.classList.remove('hidden');
-                    isExpanding = true;
-                } else {
-                    item.classList.add('hidden');
-                    isExpanding = false;
-                }
+                if(item.classList.contains('hidden')) { item.classList.remove('hidden'); isExpanding = true; } 
+                else { item.classList.add('hidden'); isExpanding = false; }
             });
 
-            if(isExpanding) {
-                btnText.innerText = "Ver menos detalles";
-                btnArrow.classList.add('rotate-180');
-            } else {
-                btnText.innerText = "Ver más detalles";
-                btnArrow.classList.remove('rotate-180');
-            }
+            if(isExpanding) { btnText.innerText = "Ver menos detalles"; btnArrow.classList.add('rotate-180'); } 
+            else { btnText.innerText = "Ver más detalles"; btnArrow.classList.remove('rotate-180'); }
         }
 
         function triggerBounceAnimation() { const c=document.getElementById('mainContainer'); if(c){ c.classList.remove('animate-bounce-x'); void c.offsetWidth; c.classList.add('animate-bounce-x'); setTimeout(()=>c.classList.remove('animate-bounce-x'),3000); }}
