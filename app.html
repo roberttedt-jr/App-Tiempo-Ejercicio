@@ -70,7 +70,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Fondos con movimiento (Gradientes complejos) */
+        /* Fondos con movimiento */
         .bg-sunny { background: linear-gradient(-45deg, #4facfe, #00f2fe, #43e97b); } 
         .bg-cloudy { background: linear-gradient(-45deg, #637786, #9CA7B1, #2C3E50); } 
         .bg-rainy { background: linear-gradient(-45deg, #203A43, #2C5364, #0F2027); } 
@@ -78,7 +78,7 @@
         .bg-storm { background: linear-gradient(-45deg, #232526, #414345, #2C3E50); } 
         .bg-sunrise { background: linear-gradient(-45deg, #f953c6, #b91d73, #2C3E50); }
         .bg-sunset { background: linear-gradient(-45deg, #654ea3, #eaafc8, #2C3E50); }
-        .bg-day { background: linear-gradient(-45deg, #4A90E2, #50C9C3, #96deda); } /* Nuevo Day con movimiento */
+        .bg-day { background: linear-gradient(-45deg, #4A90E2, #50C9C3, #96deda); }
 
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
@@ -167,16 +167,14 @@
         #mainHeader {
             transition: all 0.5s ease-in-out;
         }
-        /* Efecto de Scroll Suave (Sin línea brusca) */
         .header-scrolled {
-            background: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+            background: rgba(0, 0, 0, 0.4); 
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            /* MÁSCARA DE GRADIENTE PARA BORDE SUAVE */
             mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
             padding-top: 15px !important; 
-            padding-bottom: 25px !important; /* Un poco más de espacio para el desvanecimiento */
+            padding-bottom: 25px !important; 
             height: 90px !important; 
         }
 
@@ -205,16 +203,17 @@
         <span id="toastMessage">Notificación</span>
     </div>
 
-    <!-- CONTENEDOR PRINCIPAL (FULL VIEWPORT) -->
+    <!-- CONTENEDOR PRINCIPAL -->
     <div id="mainContainer" class="w-full h-full relative overflow-hidden flex flex-col z-10 text-center">
         
-        <!-- HEADER DINÁMICO (LOGO Y AVATAR) -->
-        <div id="mainHeader" class="absolute top-0 left-0 w-full z-30 pt-12 pb-4 px-6 flex justify-between items-end pointer-events-none h-32">
+        <!-- HEADER DINÁMICO (LOGO Y AVATAR) - REDUCIDO ESPACIO -->
+        <!-- h-24 reducido a h-20 y padding ajustado para subir elementos -->
+        <div id="mainHeader" class="absolute top-0 left-0 w-full z-30 pt-6 pb-2 px-6 flex justify-between items-center pointer-events-none h-20">
             <div class="text-left transition-transform duration-300 origin-left" id="headerLogoContainer">
-                <h1 class="font-extrabold tracking-widest text-2xl text-white drop-shadow-lg leading-none">ATMOS.</h1>
+                <h1 class="font-extrabold tracking-widest text-xl text-white drop-shadow-lg leading-none">ATMOS.</h1>
             </div>
             <button onclick="openProfileModal()" class="pointer-events-auto transition hover:scale-105 active:scale-95" id="headerAvatarBtn">
-                 <div id="headerAvatarDisplay" class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-lg shadow-lg">
+                 <div id="headerAvatarDisplay" class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-base shadow-lg">
                      <i class="fas fa-user text-white drop-shadow-sm"></i>
                  </div>
             </button>
@@ -248,13 +247,14 @@
         </div>
 
         <!-- CONTENIDO PRINCIPAL -->
-        <div id="swipeArea" class="h-full w-full overflow-y-auto hide-scroll pt-32 pb-32 px-0 fade-mask-top relative z-0">
-            <div class="flex flex-col items-center justify-center mb-10 text-center px-4 w-full pt-6">
+        <!-- Padding superior reducido (pt-20) para subir todo el contenido -->
+        <div id="swipeArea" class="h-full w-full overflow-y-auto hide-scroll pt-20 pb-32 px-0 fade-mask-top relative z-0">
+            <div class="flex flex-col items-center justify-center mb-10 text-center px-4 w-full pt-4">
                 <div class="mb-2">
                     <h2 id="cityName" class="text-3xl font-bold tracking-wide uppercase leading-none drop-shadow-md text-shadow-lg">Localizando...</h2>
                     <p id="localTime" class="text-sm font-mono opacity-90 mt-1 tracking-wider drop-shadow-sm text-shadow">--:--</p>
                 </div>
-                <div id="mainIcon" class="text-7xl mb-4 drop-shadow-2xl flex justify-center transform scale-110 mt-6 transition-all duration-500 filter drop-shadow-lg">
+                <div id="mainIcon" class="text-7xl mb-4 drop-shadow-2xl flex justify-center transform scale-110 mt-4 transition-all duration-500 filter drop-shadow-lg">
                     <i class="fas fa-spinner fa-spin text-4xl"></i>
                 </div>
                 <h1 id="currentTemp" class="text-[130px] font-light tracking-tighter leading-none text-center w-full drop-shadow-2xl text-shadow-lg pl-4 skeleton-target">--°</h1>
@@ -367,17 +367,16 @@
             </button>
         </div>
 
-        <!-- MODALES -->
-        <div id="detailModal" class="absolute inset-0 z-[60] flex items-center justify-center p-6 modal modal-closed bg-black/80 backdrop-blur-xl">
-            <div class="bg-gray-900 border border-white/10 text-white w-full max-w-sm rounded-3xl p-8 shadow-2xl relative flex flex-col items-center text-center">
+        <!-- MODALES - FONDO AJUSTADO A TRANSLÚCIDO (GLASS REAL) -->
+        <div id="detailModal" class="absolute inset-0 z-[60] flex items-center justify-center p-6 modal modal-closed bg-black/30 backdrop-blur-xl transition-all duration-500">
+            <div class="bg-gray-900/70 border border-white/10 text-white w-full max-w-sm rounded-3xl p-8 shadow-2xl relative flex flex-col items-center text-center backdrop-blur-md">
                 <button onclick="closeModal('detailModal')" class="absolute top-5 right-5 w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition"><i class="fas fa-times text-sm"></i></button>
                 <div id="modalContent" class="w-full"></div>
             </div>
         </div>
 
-        <!-- MODAL PERFIL INTELIGENTE -->
-        <div id="profileModal" class="absolute inset-0 z-[70] flex items-center justify-center p-6 modal modal-closed bg-black/95 backdrop-blur-xl">
-            <div class="bg-gradient-to-b from-gray-900 to-black border border-white/10 text-white w-full max-w-sm rounded-3xl p-8 shadow-2xl relative flex flex-col text-center">
+        <div id="profileModal" class="absolute inset-0 z-[70] flex items-center justify-center p-6 modal modal-closed bg-black/30 backdrop-blur-xl transition-all duration-500">
+            <div class="bg-gray-900/70 border border-white/10 text-white w-full max-w-sm rounded-3xl p-8 shadow-2xl relative flex flex-col text-center backdrop-blur-md">
                 <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition"><i class="fas fa-times text-sm"></i></button>
                 
                 <!-- ESTADO 1: CREAR PERFIL -->
@@ -399,7 +398,7 @@
 
                 <!-- ESTADO 2: VISUALIZAR PERFIL (MINIMALISTA) -->
                 <div id="profileViewState" class="hidden flex-col items-center justify-center py-4">
-                    <div id="viewAvatar" class="w-24 h-24 rounded-full bg-gray-800 mb-4 flex items-center justify-center text-4xl shadow-2xl border-2 border-white/20"></div>
+                    <div id="viewAvatar" class="w-24 h-24 rounded-full bg-gray-800/50 mb-4 flex items-center justify-center text-4xl shadow-2xl border-2 border-white/20 backdrop-blur-md"></div>
                     <h2 id="viewName" class="text-3xl font-bold mb-1">Usuario</h2>
                     <p class="text-sm opacity-50 mb-8 uppercase tracking-widest">Miembro Atmos</p>
                     
@@ -594,10 +593,10 @@
             }
         }
 
-        // --- ONBOARDING & PROFILE LOGIC (NUEVA) ---
+        // --- ONBOARDING & PROFILE LOGIC ---
         function checkOnboarding() {
             if (!localStorage.getItem('atmos_launched')) {
-                openProfileModal(); // Opens directly
+                openProfileModal(); 
             }
         }
 
@@ -606,7 +605,6 @@
             const createDiv = document.getElementById('profileCreateState');
             const viewDiv = document.getElementById('profileViewState');
             
-            // Lógica inteligente: ¿Tiene perfil o no?
             if (userProfile && localStorage.getItem('atmos_launched')) {
                 // MODO VER
                 createDiv.classList.add('hidden');
@@ -618,7 +616,7 @@
                 // Llenar datos
                 const avatarObj = avatars.find(a => a.icon === userProfile.avatar) || avatars[0];
                 const vAv = document.getElementById('viewAvatar');
-                vAv.className = `w-24 h-24 rounded-full mb-4 flex items-center justify-center text-4xl shadow-2xl border-4 border-white/20 ${avatarObj.color}`;
+                vAv.className = `w-24 h-24 rounded-full mb-4 flex items-center justify-center text-4xl shadow-2xl border-4 border-white/20 ${avatarObj.color} backdrop-blur-md`;
                 vAv.innerHTML = `<i class="fas ${avatarObj.icon} text-white"></i>`;
                 document.getElementById('viewName').innerText = userProfile.name;
 
@@ -630,17 +628,15 @@
                 createDiv.classList.remove('hidden');
                 createDiv.classList.add('block');
                 
-                // Prellenar si existe
                 if(userProfile) document.getElementById('profileNameInput').value = userProfile.name;
             }
 
             modal.classList.remove('modal-closed');
             modal.classList.add('modal-open');
-            toggleSidePanel(true); // Close side panel if open
+            toggleSidePanel(true); 
         }
 
         function enableEditMode() {
-            // Switch from View to Create inside the modal
             document.getElementById('profileViewState').classList.add('hidden');
             document.getElementById('profileViewState').classList.remove('flex');
             document.getElementById('profileCreateState').classList.remove('hidden');
@@ -852,7 +848,7 @@
             }
             document.body.className = `${bgClass}`; 
 
-            // Datos usando la función segura setText
+            // Datos
             setText('currentTemp', Math.round(current.temperature_2m) + "°");
             setText('minTemp', Math.round(daily.temperature_2m_min[0]) + "°");
             setText('maxTemp', Math.round(daily.temperature_2m_max[0]) + "°");
@@ -878,7 +874,7 @@
                 }
             }
 
-            // Sol Logic
+            // Sol
             let sunTimeStr = "--:--";
             let sunLabel = "Sol";
             const sunriseTimeStr = sunriseDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
