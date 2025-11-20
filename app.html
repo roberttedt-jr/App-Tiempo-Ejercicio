@@ -153,6 +153,9 @@
             opacity: 1;
             pointer-events: auto;
         }
+        .safe-area-header { 
+    padding-top: calc(3rem + env(safe-area-inset-top)); 
+}
     </style>
 </head>
 <body class="bg-sunny relative">
@@ -163,7 +166,7 @@
     <div class="w-full h-full md:h-[90vh] md:max-h-[850px] md:w-[400px] bg-glass backdrop-blur-2xl md:rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col border border-white/20 z-10 text-center mx-auto flex-none ring-1 ring-white/10">
         
         <!-- HEADER FLOTANTE -->
-        <div class="absolute top-0 left-0 w-full z-30 pt-8 pb-4 px-6 flex justify-between items-center pointer-events-none">
+        <div class="absolute top-0 left-0 w-full z-30 pb-4 px-6 flex justify-between items-center pointer-events-none safe-area-header">
             <button onclick="toggleSidePanel()" class="text-white/90 hover:text-white transition p-2 bg-white/10 rounded-full backdrop-blur-md shadow-sm pointer-events-auto relative">
                 <i class="fas fa-bars text-sm"></i>
                 <!-- Indicador de perfil si existe -->
@@ -1138,5 +1141,6 @@
 </body>
 
 </html>
+
 
 
